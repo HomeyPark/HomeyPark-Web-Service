@@ -29,7 +29,7 @@ public class ReservationController {
 
         var reservation = reservationCommandService.handle(createReservationCommand);
 
-        return reservation.map(r -> new ResponseEntity<>(r, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+        return reservation.map(r -> new ResponseEntity<>(r, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping("/{id}")
@@ -38,6 +38,6 @@ public class ReservationController {
 
         var reservation = reservationQueryService.handle(getReservationByIdQuery);
 
-        return reservation.map(r -> new ResponseEntity<>(r, HttpStatus.OK)).orElse(ResponseEntity.notFound().build());
+        return reservation.map(r -> new ResponseEntity<>(r, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
