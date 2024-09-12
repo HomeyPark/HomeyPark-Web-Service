@@ -3,6 +3,7 @@ package com.homeypark.web_service.user.domain.model.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
