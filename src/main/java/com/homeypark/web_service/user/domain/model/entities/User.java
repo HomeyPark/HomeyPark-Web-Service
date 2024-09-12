@@ -1,9 +1,6 @@
 package com.homeypark.web_service.user.domain.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
@@ -16,5 +13,4 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-
 }
