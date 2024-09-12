@@ -1,10 +1,14 @@
 package com.homeypark.web_service.user.interfaces.rest;
 
 
+import com.homeypark.web_service.user.application.internal.commandServices.UserCommandService;
 import com.homeypark.web_service.user.application.internal.queryServices.UserQueryService;
+import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.model.queries.GetAllUsersQuery;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
+import com.homeypark.web_service.user.interfaces.rest.resources.CreateUserResource;
+import com.homeypark.web_service.user.interfaces.rest.transformers.CreateUserCommandFromResourceAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +19,11 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserController {
     private final UserQueryService userQueryService;
+    private final UserCommandService userCommandService;
 
-    public UserController(UserQueryService userQueryService) {
+    public UserController(UserQueryService userQueryService, UserCommandService userCommandService) {
         this.userQueryService = userQueryService;
+        this.userCommandService = userCommandService;
     }
 
     @GetMapping
@@ -36,5 +42,14 @@ public class UserController {
         var user = userQueryService.handle(getUserByIdQuery);
 
         return user.map(u -> new ResponseEntity<>(u, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody CreateUserResource createUserResource) {
+        var createUserCommand = CreateUserCommandFromResourceAssembler.toCommandFromResource(createUserResource);
+
+        var user = userCommandService.handle(createUserCommand);
+
+        return user.map(u -> new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }
