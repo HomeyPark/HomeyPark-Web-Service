@@ -4,9 +4,11 @@ import com.homeypark.web_service.reservations.domain.model.commands.CreateReserv
 import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
 import com.homeypark.web_service.reservations.domain.services.IReservationCommandService;
 import com.homeypark.web_service.reservations.infrastructure.repositories.jpa.IReservationRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class ReservationCommandService implements IReservationCommandService {
     private final IReservationRepository reservationRepository;
 
