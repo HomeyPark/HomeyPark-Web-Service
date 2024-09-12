@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,7 +24,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Parking> parkings;
+    private List<Parking> parkings = new ArrayList<>();
 
 
     public User(String email, Long id, String lastName, String name, String password) {

@@ -8,7 +8,9 @@ import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.model.queries.GetAllUsersQuery;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
 import com.homeypark.web_service.user.interfaces.rest.resources.CreateUserResource;
+import com.homeypark.web_service.user.interfaces.rest.resources.UserResource;
 import com.homeypark.web_service.user.interfaces.rest.transformers.CreateUserCommandFromResourceAssembler;
+import com.homeypark.web_service.user.interfaces.rest.transformers.UserResourceFromEntityAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,29 +29,32 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResource>> getAllUsers() {
 
         var getAllUsersQuery = new GetAllUsersQuery();
         var users = userQueryService.handle(getAllUsersQuery);
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        var usersResource = users.stream().map(UserResourceFromEntityAssembler::toResourceFromEntity).toList();
+
+        return new ResponseEntity<>(usersResource, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserResource> getUserById(@PathVariable("id") Long id) {
         var getUserByIdQuery = new GetUserByIdQuery(id);
 
         var user = userQueryService.handle(getUserByIdQuery);
 
-        return user.map(u -> new ResponseEntity<>(u, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return user.map(u -> new ResponseEntity<>(UserResourceFromEntityAssembler.toResourceFromEntity(u), HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody CreateUserResource createUserResource) {
+    public ResponseEntity<UserResource> createUser(@RequestBody CreateUserResource createUserResource) {
         var createUserCommand = CreateUserCommandFromResourceAssembler.toCommandFromResource(createUserResource);
 
         var user = userCommandService.handle(createUserCommand);
 
-        return user.map(u -> new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+
+        return user.map(u -> new ResponseEntity<>(UserResourceFromEntityAssembler.toResourceFromEntity(u), HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }

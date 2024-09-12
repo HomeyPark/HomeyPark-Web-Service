@@ -30,6 +30,13 @@ public class ParkingCommandService implements IParkingCommandService {
         Parking parking = new Parking(command);
         parking.setUser(user.get());
 
+        System.out.println("DEBUG" + parking.getUser());
+        System.out.println("DEBUG" + parking);
+
+        user.get().getParkings().add(parking);
+
+
+
         try{
             var response = parkingRepository.save(parking);
             return Optional.of(response);
