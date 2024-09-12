@@ -1,6 +1,7 @@
 package com.homeypark.web_service.parkings.domain.model.entities;
 
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
+import com.homeypark.web_service.user.domain.model.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,16 +16,21 @@ import lombok.NoArgsConstructor;
 public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-    public String address;
-    public double width;
-    public double length;
-    public double height;
-    public double price;
-    public String phone;
-    public String description;
-    public double latitude;
-    public double longitude;
+    private Long id;
+    private String address;
+    private double width;
+    private double length;
+    private double height;
+    private double price;
+    private String phone;
+    private String description;
+    private double latitude;
+    private double longitude;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
 
     public Parking(CreateParkingCommand command) {
         this.address = command.address();

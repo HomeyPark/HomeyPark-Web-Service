@@ -4,6 +4,8 @@ import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCom
 import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.parkings.domain.services.IParkingCommandService;
 import com.homeypark.web_service.parkings.infrastructure.repositories.jpa.IParkingRepository;
+import com.homeypark.web_service.user.domain.model.entities.User;
+import com.homeypark.web_service.user.infrastructure.repositories.jpa.IUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,15 +13,22 @@ import java.util.Optional;
 @Service
 public class ParkingCommandService implements IParkingCommandService {
     private final IParkingRepository parkingRepository;
+    private final IUserRepository userRepository;
 
-    public ParkingCommandService(IParkingRepository parkingRepository) {
+    public ParkingCommandService(IParkingRepository parkingRepository, IUserRepository userRepository) {
         this.parkingRepository = parkingRepository;
+        this.userRepository = userRepository;
     }
 
 
     @Override
     public Optional<Parking> handle(CreateParkingCommand command) {
+        Optional<User> user = userRepository.findById(command.userId());
+
+        if (user.isEmpty()) return Optional.empty();
+
         Parking parking = new Parking(command);
+        parking.setUser(user.get());
 
         try{
             var response = parkingRepository.save(parking);
