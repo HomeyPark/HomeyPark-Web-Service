@@ -2,10 +2,14 @@ package com.homeypark.web_service.parkings.interfaces.rest;
 
 import com.homeypark.web_service.parkings.application.internal.commandServices.ParkingCommandService;
 import com.homeypark.web_service.parkings.application.internal.queryServices.ParkingQueryService;
+import com.homeypark.web_service.parkings.domain.model.commands.DeleteParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllParkingQuery;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkingResource;
+import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkingResource;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.CreateParkingCommandFromResourceAssembler;
+import com.homeypark.web_service.parkings.interfaces.rest.transformers.UpdateParkingCommandFromResourceAssembler;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/parking")
+@Tag(name="Parking", description = "Parking Managment Endpoints")
 public class ParkingController {
     private final ParkingCommandService parkingCommandService;
     private final ParkingQueryService parkingQueryService;
@@ -39,5 +44,22 @@ public class ParkingController {
         var parking = parkingCommandService.handle(createParkingCommand);
 
         return parking.map(p -> new ResponseEntity<>(p, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Parking> updateParking(@PathVariable Long id, @RequestBody UpdateParkingResource updateParkingResource){
+
+        var updateParkingCommand = UpdateParkingCommandFromResourceAssembler.toCommandFromResource(id, updateParkingResource);
+
+        var updatedParking = parkingCommandService.handle(updateParkingCommand);
+
+        return updatedParking.map(p -> new ResponseEntity<>(p, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteParking(@PathVariable Long id){
+        var deleteParkingCommand = new DeleteParkingCommand(id);
+        parkingCommandService.handle(deleteParkingCommand);
+        return ResponseEntity.ok("Parking with given id succesfully deleted");
     }
 }

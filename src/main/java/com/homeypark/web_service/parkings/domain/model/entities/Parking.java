@@ -1,6 +1,7 @@
 package com.homeypark.web_service.parkings.domain.model.entities;
 
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
+import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,5 +37,17 @@ public class Parking {
         this.description = command.description();
         this.latitude = command.latitude();
         this.longitude = command.longitude();
+    }
+    public Parking updatedParking(UpdateParkingCommand command){
+        this.address = command.address();
+        this.width = command.width();
+        this.length = command.length();
+        this.height = command.height();
+        this.price = command.price();
+        this.phone = command.phone();
+        this.description = command.description();
+        this.latitude = command.latitude();
+        this.longitude = command.longitude();
+        return this;
     }
 }
