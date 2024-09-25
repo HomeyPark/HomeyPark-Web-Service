@@ -13,5 +13,7 @@ public record UpdateParkingResource(String address,
                                     String typeDirection,
                                     String numDirection,
                                     String street,
-                                    String reference) {
+                                    String reference,
+                                    String startTime,
+                                    String endTime) {
 }

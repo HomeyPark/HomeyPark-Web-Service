@@ -19,6 +19,8 @@ public class UpdateParkingCommandFromResourceAssembler {
                 resource.typeDirection(),
                 resource.numDirection(),
                 resource.street(),
-                resource.reference());
+                resource.reference(),
+                resource.startTime(),
+                resource.endTime());
     }
 }

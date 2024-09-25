@@ -2,6 +2,7 @@ package com.homeypark.web_service.parkings.domain.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.homeypark.web_service.parkings.domain.model.aggregates.Location;
+import com.homeypark.web_service.parkings.domain.model.aggregates.Schedule;
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateLocationCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
@@ -32,6 +33,10 @@ public class Parking {
     @JsonManagedReference
     private Location location;
 
+    @OneToOne(mappedBy = "parking", cascade = CascadeType.ALL, optional = false)
+    @JsonManagedReference
+    private Schedule schedule;
+
     public Parking(CreateParkingCommand command) {
         this.address = command.address();
         this.width = command.width();
@@ -52,6 +57,15 @@ public class Parking {
         this.location.setReference(command.reference());
 
         this.location.setParking(this);
+
+        //Schedule
+        this.schedule = new Schedule();
+        this.schedule.setStartTime(command.startTime());
+        this.schedule.setEndTime(command.endTime());
+
+        this.schedule.setParking(this);
+
+
     }
     public Parking updatedParking(UpdateParkingCommand command){
         this.address = command.address();

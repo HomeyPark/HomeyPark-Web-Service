@@ -14,5 +14,7 @@ public record UpdateParkingCommand(Long parkingId,
                                    String typeDirection,
                                    String numDirection,
                                    String street,
-                                   String reference) {
+                                   String reference,
+                                   String startTime,
+                                   String endTime) {
 }
