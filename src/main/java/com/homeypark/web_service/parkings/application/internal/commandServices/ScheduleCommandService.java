@@ -30,6 +30,5 @@ public class ScheduleCommandService implements IScheduleCommandService {
         } catch (Exception e){
             throw new IllegalArgumentException("Error while updating schedule: " + e.getMessage());
         }
-
     }
 }

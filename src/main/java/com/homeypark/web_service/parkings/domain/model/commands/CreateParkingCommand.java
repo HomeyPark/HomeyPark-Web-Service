@@ -8,7 +8,12 @@ public record CreateParkingCommand(
         double price,
         String phone,
         String description,
-        double latitude,
-        double longitude
+        String district,
+        String city,
+        String coordinates,
+        String typeDirection,
+        String numDirection,
+        String street,
+        String reference
 ) {
 }

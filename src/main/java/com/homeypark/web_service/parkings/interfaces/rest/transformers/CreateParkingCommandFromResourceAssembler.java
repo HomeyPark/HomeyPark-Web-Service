@@ -13,8 +13,13 @@ public class CreateParkingCommandFromResourceAssembler {
                 resource.price(),
                 resource.phone(),
                 resource.description(),
-                resource.latitude(),
-                resource.longitude()
+                resource.district(),
+                resource.city(),
+                resource.coordinates(),
+                resource.typeDirection(),
+                resource.numDirection(),
+                resource.street(),
+                resource.reference()
         );
     }
 }

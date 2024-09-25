@@ -1,6 +1,9 @@
 package com.homeypark.web_service.parkings.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.homeypark.web_service.parkings.domain.model.aggregates.Location;
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
+import com.homeypark.web_service.parkings.domain.model.commands.UpdateLocationCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,8 +27,10 @@ public class Parking {
     public double price;
     public String phone;
     public String description;
-    public double latitude;
-    public double longitude;
+
+    @OneToOne(mappedBy = "parking", cascade = CascadeType.ALL, optional = false)
+    @JsonManagedReference
+    private Location location;
 
     public Parking(CreateParkingCommand command) {
         this.address = command.address();
@@ -35,8 +40,18 @@ public class Parking {
         this.price = command.price();
         this.phone = command.phone();
         this.description = command.description();
-        this.latitude = command.latitude();
-        this.longitude = command.longitude();
+
+        //Location
+        this.location = new Location();
+        this.location.setDistrict(command.district());
+        this.location.setCity(command.city());
+        this.location.setCoordinates(command.coordinates());
+        this.location.setTypeDirection(command.typeDirection());
+        this.location.setNumDirection(command.numDirection());
+        this.location.setStreet(command.street());
+        this.location.setReference(command.reference());
+
+        this.location.setParking(this);
     }
     public Parking updatedParking(UpdateParkingCommand command){
         this.address = command.address();
@@ -46,8 +61,7 @@ public class Parking {
         this.price = command.price();
         this.phone = command.phone();
         this.description = command.description();
-        this.latitude = command.latitude();
-        this.longitude = command.longitude();
+
         return this;
     }
 }
