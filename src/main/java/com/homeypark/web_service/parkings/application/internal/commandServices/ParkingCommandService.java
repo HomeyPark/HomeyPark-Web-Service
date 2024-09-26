@@ -25,20 +25,7 @@ public class ParkingCommandService implements IParkingCommandService {
 
     @Override
     public Optional<Parking> handle(CreateParkingCommand command) {
-        Optional<User> user = userRepository.findById(command.userId());
-
-        if (user.isEmpty()) return Optional.empty();
-
         Parking parking = new Parking(command);
-        parking.setUser(user.get());
-
-        System.out.println("DEBUG" + parking.getUser());
-        System.out.println("DEBUG" + parking);
-
-        user.get().getParkings().add(parking);
-
-
-
         try{
             var response = parkingRepository.save(parking);
             return Optional.of(response);

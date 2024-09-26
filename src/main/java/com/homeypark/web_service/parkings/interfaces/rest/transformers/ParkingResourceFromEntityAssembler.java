@@ -14,9 +14,16 @@ public class ParkingResourceFromEntityAssembler {
                 entity.getPrice(),
                 entity.getPhone(),
                 entity.getDescription(),
-                entity.getLatitude(),
-                entity.getLongitude(),
-                entity.getUser().getId()
+                entity.getLocation().getDistrict(),
+                entity.getLocation().getCity(),
+                entity.getLocation().getCoordinates(),
+                entity.getLocation().getTypeDirection(),
+                entity.getLocation().getNumDirection(),
+                entity.getLocation().getStreet(),
+                entity.getLocation().getReference(),
+                entity.getSchedule().getStartTime(),
+                entity.getSchedule().getEndTime(),
+                entity.getId()
         );
     }
 }

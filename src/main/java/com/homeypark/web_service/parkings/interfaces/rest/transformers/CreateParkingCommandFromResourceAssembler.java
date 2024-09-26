@@ -6,6 +6,7 @@ import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkin
 public class CreateParkingCommandFromResourceAssembler {
     public static CreateParkingCommand toCommandFromResource(CreateParkingResource resource) {
         return new CreateParkingCommand(
+                resource.userId(),
                 resource.address(),
                 resource.width(),
                 resource.length(),

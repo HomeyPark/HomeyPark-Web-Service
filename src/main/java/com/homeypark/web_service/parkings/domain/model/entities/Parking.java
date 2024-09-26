@@ -6,6 +6,7 @@ import com.homeypark.web_service.parkings.domain.model.aggregates.Schedule;
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateLocationCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
+import com.homeypark.web_service.user.domain.model.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,11 @@ public class Parking {
     @OneToOne(mappedBy = "parking", cascade = CascadeType.ALL, optional = false)
     @JsonManagedReference
     private Schedule schedule;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JoinColumn(name = "user_id", insertable = true, updatable = true)
+    private User user;
 
     public Parking(CreateParkingCommand command) {
         this.address = command.address();

@@ -9,8 +9,15 @@ public record ParkingResource(
         Double price,
         String phone,
         String description,
-        Double latitude,
-        Double longitude,
+        String district,
+        String city,
+        String coordinates,
+        String typeDirection,
+        String numDirection,
+        String street,
+        String reference,
+        String startTime,
+        String endTime,
         Long userId
 ) {
 }

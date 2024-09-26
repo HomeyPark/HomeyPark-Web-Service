@@ -1,6 +1,7 @@
 package com.homeypark.web_service.parkings.interfaces.rest.resources;
 
 public record CreateParkingResource(
+        Long userId,
         String address,
         double width,
         double length,
