@@ -1,11 +1,11 @@
 package com.homeypark.web_service.parkings.interfaces.rest.transformers;
 
-import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
-import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkingResource;
+import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
+import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkingResource;
 
-public class CreateParkingCommandFromResourceAssembler {
-    public static CreateParkingCommand toCommandFromResource(CreateParkingResource resource) {
-        return new CreateParkingCommand(
+public class UpdateParkingCommandFromResourceAssembler {
+    public static UpdateParkingCommand toCommandFromResource(Long id, UpdateParkingResource resource){
+        return new UpdateParkingCommand(id,
                 resource.address(),
                 resource.width(),
                 resource.length(),
@@ -21,8 +21,6 @@ public class CreateParkingCommandFromResourceAssembler {
                 resource.street(),
                 resource.reference(),
                 resource.startTime(),
-                resource.endTime()
-        );
+                resource.endTime());
     }
 }
-

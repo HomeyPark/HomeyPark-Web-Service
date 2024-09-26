@@ -2,14 +2,20 @@ package com.homeypark.web_service.parkings.interfaces.rest.resources;
 
 public record CreateParkingResource(
         String address,
-        Double width,
-        Double length,
-        Double height,
-        Double price,
+        double width,
+        double length,
+        double height,
+        double price,
         String phone,
         String description,
-        Double latitude,
-        Double longitude,
-        Long userId
+        String district,
+        String city,
+        String coordinates,
+        String typeDirection,
+        String numDirection,
+        String street,
+        String reference,
+        String startTime,
+        String endTime
 ) {
 }
