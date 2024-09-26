@@ -18,7 +18,6 @@ public class UserQueryService implements IUserQueryService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public Optional<User> handle(GetUserByIdQuery query)
     {
