@@ -4,9 +4,11 @@ import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
 
 import java.time.LocalDateTime;
 
-public record CreateReservationResource(
+public record UpdateReservationResource(
         Integer hoursRegistered,
         Double totalFare,
         LocalDateTime startTime,
         LocalDateTime endTime,
-        Status status) {}
+        Status status
+) {
+}
