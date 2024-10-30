@@ -1,6 +1,7 @@
 package com.homeypark.web_service.user.domain.model.entities;
 
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
+import com.homeypark.web_service.user.domain.model.commands.UpdateUserCommand;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,13 @@ public class User {
         this.lastName = command.lastName();
         this.email = command.email();
         this.password = command.password();
+    }
+
+    public User updatedUser(UpdateUserCommand command) {
+        this.name = command.name();
+        this.lastName = command.lastName();
+        this.email = command.email();
+        this.password = command.password();
+        return this;
     }
 }

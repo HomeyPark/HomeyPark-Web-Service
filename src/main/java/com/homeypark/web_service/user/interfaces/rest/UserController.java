@@ -8,7 +8,9 @@ import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.model.queries.GetAllUsersQuery;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
 import com.homeypark.web_service.user.interfaces.rest.resources.CreateUserResource;
+import com.homeypark.web_service.user.interfaces.rest.resources.UpdateUserResource;
 import com.homeypark.web_service.user.interfaces.rest.transformers.CreateUserCommandFromResourceAssembler;
+import com.homeypark.web_service.user.interfaces.rest.transformers.UpdateUserCommandFromResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,4 +54,13 @@ public class UserController {
 
         return user.map(u -> new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UpdateUserResource updateUserResource) {
+        var updateUserCommand = UpdateUserCommandFromResource.toCommandFromResource(id, updateUserResource);
+        var updatedUser = userCommandService.handle(updateUserCommand);
+        return updatedUser.map(r -> new ResponseEntity<>(r, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }
