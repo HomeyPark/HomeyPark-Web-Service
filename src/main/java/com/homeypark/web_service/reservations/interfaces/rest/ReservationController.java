@@ -76,4 +76,10 @@ public class ReservationController {
         var upComingList = reservationQueryService.handle(getUpComingReservationQuery);
         return new ResponseEntity<>(upComingList,HttpStatus.OK);
     }
+    @GetMapping("/past")
+    public ResponseEntity<List<Reservation>> getPastReservations(){
+        var getPastReservationQuery = new GetPastReservationQuery();
+        var pastList = reservationQueryService.handle(getPastReservationQuery);
+        return new ResponseEntity<>(pastList,HttpStatus.OK);
+    }
 }

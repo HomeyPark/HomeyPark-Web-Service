@@ -10,6 +10,7 @@ public interface IReservationQueryService {
     List<Reservation> handle(GetAllReservationsQuery query);
     Optional<Reservation> handle(GetReservationByIdQuery query);
     List<Reservation> handle(GetInProgressReservationQuery query);
+    List<Reservation> handle(GetPastReservationQuery query);
     List<Reservation> handle(GetUpComingReservationQuery query);
     List<Reservation> handle(GetPendingReservationQuery query);
 }

@@ -7,6 +7,7 @@ import com.homeypark.web_service.reservations.domain.services.IReservationQueryS
 import com.homeypark.web_service.reservations.infrastructure.repositories.jpa.IReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,12 @@ public class ReservationQueryService implements IReservationQueryService {
     @Override
     public List<Reservation> handle(GetInProgressReservationQuery query) {
         return reservationRepository.findByStatus(Status.InProgress);
+    }
+
+    @Override
+    public List<Reservation> handle(GetPastReservationQuery query) {
+        List<Status> pastStatuses = Arrays.asList(Status.Completed, Status.Cancelled);
+        return reservationRepository.findByStatusIn(pastStatuses);
     }
 
     @Override

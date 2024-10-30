@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface IReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByStatus(Status status);
+    List<Reservation> findByStatusIn(List<Status> statusList);
 }
