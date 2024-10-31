@@ -2,6 +2,7 @@ package com.homeypark.web_service.user.domain.model.aggregates;
 
 
 import com.homeypark.web_service.user.domain.model.commands.CreateVehicleCommand;
+import com.homeypark.web_service.user.domain.model.commands.UpdateVehicleCommand;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -38,5 +39,12 @@ public class Vehicle {
         this.model = command.model();
         this.brand = command.brand();
         this.user = user;
+    }
+
+    public Vehicle updatedVehicle(UpdateVehicleCommand command) {
+        this.licensePlate = command.licensePlate();
+        this.model = command.model();
+        this.brand = command.brand();
+        return this;
     }
 }
