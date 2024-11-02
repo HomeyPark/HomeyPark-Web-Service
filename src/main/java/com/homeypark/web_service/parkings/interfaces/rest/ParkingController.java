@@ -5,6 +5,7 @@ import com.homeypark.web_service.parkings.application.internal.queryServices.Par
 import com.homeypark.web_service.parkings.domain.model.commands.DeleteParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllParkingQuery;
+import com.homeypark.web_service.parkings.domain.model.queries.GetParkingByIdQuery;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkingResource;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkingResource;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.CreateParkingCommandFromResourceAssembler;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/parking")
@@ -62,4 +64,16 @@ public class ParkingController {
         parkingCommandService.handle(deleteParkingCommand);
         return ResponseEntity.ok("Parking with given id succesfully deleted");
     }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<Parking> getParkingDetailsById(@PathVariable Long id) {
+        GetParkingByIdQuery query = new GetParkingByIdQuery(id);
+        Optional<Parking> parking = parkingQueryService.handle(query);
+
+        if (parking.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(parking.get());
+    }
+
 }
