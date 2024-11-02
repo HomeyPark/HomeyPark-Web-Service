@@ -10,6 +10,7 @@ import com.homeypark.web_service.reservations.interfaces.rest.resources.UpdateRe
 import com.homeypark.web_service.reservations.interfaces.rest.transformers.CreateReservationCommandFromResourceAssembler;
 import com.homeypark.web_service.reservations.interfaces.rest.transformers.UpdateReservationCommandFromResource;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +64,10 @@ public class ReservationController {
         var getPendingReservationQuery = new GetPendingReservationQuery();
         var pendingList = reservationQueryService.handle(getPendingReservationQuery);
         return new ResponseEntity<>(pendingList,HttpStatus.OK);
+    }
+    @GetMapping("/approved")
+    public ResponseEntity<List<Reservation>> getApprovedReservation(){
+        return null;
     }
     @GetMapping("/inProgress")
     public ResponseEntity<List<Reservation>> getInProgressReservation(){

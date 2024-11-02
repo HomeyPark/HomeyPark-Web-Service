@@ -31,7 +31,6 @@ public class Reservation {
         this.totalFare = command.totalFare();
         this.startTime = command.startTime();
         this.endTime = command.endTime();
-        this.status = command.status();
     }
     public Reservation updatedReservation(UpdateReservationCommand command){
         this.hoursRegistered = command.hoursRegistered();

@@ -10,8 +10,7 @@ public class CreateReservationCommandFromResourceAssembler {
                 resource.hoursRegistered(),
                 resource.totalFare(),
                 resource.startTime(),
-                resource.endTime(),
-                resource.status()
+                resource.endTime()
         );
     }
 }

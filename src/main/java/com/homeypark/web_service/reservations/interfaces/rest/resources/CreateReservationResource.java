@@ -8,5 +8,4 @@ public record CreateReservationResource(
         Integer hoursRegistered,
         Double totalFare,
         LocalDateTime startTime,
-        LocalDateTime endTime,
-        Status status) {}
+        LocalDateTime endTime) {}

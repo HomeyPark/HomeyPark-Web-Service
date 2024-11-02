@@ -3,6 +3,7 @@ package com.homeypark.web_service.reservations.aplication.internal.commandServic
 import com.homeypark.web_service.reservations.domain.model.commands.CreateReservationCommand;
 import com.homeypark.web_service.reservations.domain.model.commands.UpdateReservationCommand;
 import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
+import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
 import com.homeypark.web_service.reservations.domain.services.IReservationCommandService;
 import com.homeypark.web_service.reservations.infrastructure.repositories.jpa.IReservationRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ReservationCommandService implements IReservationCommandService {
     @Override
     public Optional<Reservation> handle(CreateReservationCommand command) {
         var reservation = new Reservation(command);
-
+        reservation.setStatus(Status.Pending);
         try {
             var response = reservationRepository.save(reservation);
             return Optional.of(response);
