@@ -1,5 +1,6 @@
 package com.homeypark.web_service.user.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.homeypark.web_service.user.domain.model.aggregates.Vehicle;
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
 import com.homeypark.web_service.user.domain.model.commands.UpdateUserCommand;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,8 +25,9 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private ArrayList<Vehicle> vehicles;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference
+    private List<Vehicle> vehicles = new ArrayList<>();
 
 
     public User(String email, Long id, String lastName, String name, String password) {
