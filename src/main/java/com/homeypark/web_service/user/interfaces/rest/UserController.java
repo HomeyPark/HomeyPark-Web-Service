@@ -4,6 +4,7 @@ package com.homeypark.web_service.user.interfaces.rest;
 import com.homeypark.web_service.user.application.internal.commandServices.UserCommandService;
 import com.homeypark.web_service.user.application.internal.queryServices.UserQueryService;
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
+import com.homeypark.web_service.user.domain.model.commands.DeleteUserCommand;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.model.queries.GetAllUsersQuery;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
@@ -61,6 +62,13 @@ public class UserController {
         var updatedUser = userCommandService.handle(updateUserCommand);
         return updatedUser.map(r -> new ResponseEntity<>(r, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+        var deleteUserCommand = new DeleteUserCommand(id);
+        userCommandService.handle(deleteUserCommand);
+        return ResponseEntity.ok("User with given id successfully deleted ");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.homeypark.web_service.user.application.internal.commandServices;
 
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
+import com.homeypark.web_service.user.domain.model.commands.DeleteUserCommand;
 import com.homeypark.web_service.user.domain.model.commands.UpdateUserCommand;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.services.IUserCommandService;
@@ -46,4 +47,11 @@ public class UserCommandService implements IUserCommandService {
             throw new IllegalArgumentException("Error while updating user: " + e.getMessage());
         }
     }
+
+    @Override
+    public void handle(DeleteUserCommand command){
+        userRepository.deleteById(command.userId());
+        System.out.println("User Delete");
+    }
+
 }
