@@ -43,11 +43,7 @@ public class ReservationQueryService implements IReservationQueryService {
 
     @Override
     public List<Reservation> handle(GetUpComingReservationQuery query) {
-        return reservationRepository.findByStatus(Status.UpComing);
-    }
-
-    @Override
-    public List<Reservation> handle(GetPendingReservationQuery query) {
-        return reservationRepository.findByStatus(Status.Pending);
+        List<Status> comingStatuses = Arrays.asList(Status.Pending, Status.Approved);
+        return reservationRepository.findByStatusIn(comingStatuses);
     }
 }

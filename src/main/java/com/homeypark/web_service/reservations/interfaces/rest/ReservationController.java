@@ -1,6 +1,5 @@
 package com.homeypark.web_service.reservations.interfaces.rest;
 
-import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.reservations.aplication.internal.commandServices.ReservationCommandService;
 import com.homeypark.web_service.reservations.aplication.internal.queryServices.ReservationQueryService;
 import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
@@ -9,8 +8,6 @@ import com.homeypark.web_service.reservations.interfaces.rest.resources.CreateRe
 import com.homeypark.web_service.reservations.interfaces.rest.resources.UpdateReservationResource;
 import com.homeypark.web_service.reservations.interfaces.rest.transformers.CreateReservationCommandFromResourceAssembler;
 import com.homeypark.web_service.reservations.interfaces.rest.transformers.UpdateReservationCommandFromResource;
-import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +47,11 @@ public class ReservationController {
         return updatedReservation.map(r -> new ResponseEntity<>(r, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Reservation> updateReservationStatus(@PathVariable Long id){
+        
+        return null;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable("id") Long id) {
@@ -61,13 +63,9 @@ public class ReservationController {
     }
     @GetMapping("/pending")
     public ResponseEntity<List<Reservation>> getPendingReservation(){
-        var getPendingReservationQuery = new GetPendingReservationQuery();
+        var getPendingReservationQuery = new GetUpComingReservationQuery();
         var pendingList = reservationQueryService.handle(getPendingReservationQuery);
         return new ResponseEntity<>(pendingList,HttpStatus.OK);
-    }
-    @GetMapping("/approved")
-    public ResponseEntity<List<Reservation>> getApprovedReservation(){
-        return null;
     }
     @GetMapping("/inProgress")
     public ResponseEntity<List<Reservation>> getInProgressReservation(){
