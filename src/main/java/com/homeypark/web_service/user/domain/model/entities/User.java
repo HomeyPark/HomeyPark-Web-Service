@@ -1,7 +1,9 @@
 package com.homeypark.web_service.user.domain.model.entities;
 
-import com.homeypark.web_service.parkings.domain.model.entities.Parking;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.homeypark.web_service.user.domain.model.aggregates.Vehicle;
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
+import com.homeypark.web_service.user.domain.model.commands.UpdateUserCommand;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +25,9 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Parking> parkings = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference
+    private List<Vehicle> vehicles = new ArrayList<>();
 
 
     public User(String email, Long id, String lastName, String name, String password) {
@@ -33,6 +36,7 @@ public class User {
         this.lastName = lastName;
         this.name = name;
         this.password = password;
+        this.vehicles = new ArrayList<>();
     }
 
     public User(CreateUserCommand command) {
@@ -40,5 +44,14 @@ public class User {
         this.lastName = command.lastName();
         this.email = command.email();
         this.password = command.password();
+        this.vehicles = new ArrayList<>();
+    }
+
+    public User updatedUser(UpdateUserCommand command) {
+        this.name = command.name();
+        this.lastName = command.lastName();
+        this.email = command.email();
+        this.password = command.password();
+        return this;
     }
 }
