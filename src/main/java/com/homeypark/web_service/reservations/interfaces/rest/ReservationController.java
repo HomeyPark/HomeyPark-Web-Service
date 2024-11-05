@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/reservations")
@@ -64,6 +65,10 @@ public class ReservationController {
         var reservation = reservationQueryService.handle(getReservationByIdQuery);
 
         return reservation.map(r -> new ResponseEntity<>(r, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/{id}/details")
+    public ResponseEntity<Map<String, Object>> getReservationDetails(@PathVariable("id") Long id) {
+        return null;
     }
     @GetMapping("/inProgress")
     public ResponseEntity<List<Reservation>> getInProgressReservation(){

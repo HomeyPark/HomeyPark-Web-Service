@@ -1,6 +1,9 @@
 package com.homeypark.web_service.user.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.homeypark.web_service.payment.domain.model.entities.Card;
+import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
 import com.homeypark.web_service.user.domain.model.aggregates.Vehicle;
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
 import com.homeypark.web_service.user.domain.model.commands.UpdateUserCommand;
@@ -31,6 +34,9 @@ public class User {
     @JsonManagedReference
     private List<Vehicle> vehicles = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @JsonManagedReference
+    private List<Card> cards = new ArrayList<>();
 
     public User(String email, Long id, String lastName, String name, String password, LocalDateTime dateCreated) {
         this.id = id;
@@ -41,7 +47,6 @@ public class User {
         this.dateCreated = dateCreated;
         this.vehicles = new ArrayList<>();
     }
-
     public User(CreateUserCommand command) {
         this.name = command.name();
         this.lastName = command.lastName();
@@ -49,7 +54,6 @@ public class User {
         this.password = command.password();
         this.vehicles = new ArrayList<>();
     }
-
     public User updatedUser(UpdateUserCommand command) {
         this.name = command.name();
         this.lastName = command.lastName();

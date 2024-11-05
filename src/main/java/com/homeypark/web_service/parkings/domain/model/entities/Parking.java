@@ -1,11 +1,13 @@
 package com.homeypark.web_service.parkings.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.homeypark.web_service.parkings.domain.model.aggregates.Location;
 import com.homeypark.web_service.parkings.domain.model.aggregates.Schedule;
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateLocationCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
+import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
