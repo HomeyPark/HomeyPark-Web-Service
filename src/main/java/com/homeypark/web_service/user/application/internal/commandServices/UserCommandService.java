@@ -8,6 +8,7 @@ import com.homeypark.web_service.user.domain.services.IUserCommandService;
 import com.homeypark.web_service.user.infrastructure.repositories.jpa.IUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,7 @@ public class UserCommandService implements IUserCommandService {
     @Override
     public Optional<User> handle(CreateUserCommand command) {
         User user = new User(command);
-
+        user.setDateCreated(LocalDateTime.now());
         try {
             var response = userRepository.save(user);
 

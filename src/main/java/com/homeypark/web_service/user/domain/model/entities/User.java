@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,18 +25,20 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private LocalDateTime dateCreated;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonManagedReference
     private List<Vehicle> vehicles = new ArrayList<>();
 
 
-    public User(String email, Long id, String lastName, String name, String password) {
+    public User(String email, Long id, String lastName, String name, String password, LocalDateTime dateCreated) {
         this.id = id;
         this.email = email;
         this.lastName = lastName;
         this.name = name;
         this.password = password;
+        this.dateCreated = dateCreated;
         this.vehicles = new ArrayList<>();
     }
 
