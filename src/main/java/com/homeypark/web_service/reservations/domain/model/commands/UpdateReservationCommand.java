@@ -9,6 +9,5 @@ public record UpdateReservationCommand(
         Integer hoursRegistered,
         Double totalFare,
         LocalDateTime startTime,
-        LocalDateTime endTime,
-        Status status) {
+        LocalDateTime endTime) {
 }

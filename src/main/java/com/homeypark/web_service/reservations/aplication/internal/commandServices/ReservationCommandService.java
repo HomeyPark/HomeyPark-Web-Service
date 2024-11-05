@@ -2,6 +2,7 @@ package com.homeypark.web_service.reservations.aplication.internal.commandServic
 
 import com.homeypark.web_service.reservations.domain.model.commands.CreateReservationCommand;
 import com.homeypark.web_service.reservations.domain.model.commands.UpdateReservationCommand;
+import com.homeypark.web_service.reservations.domain.model.commands.UpdateStatusCommand;
 import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
 import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
 import com.homeypark.web_service.reservations.domain.services.IReservationCommandService;
@@ -42,6 +43,20 @@ public class ReservationCommandService implements IReservationCommandService {
             return Optional.of(updatedReservation);
         }catch (Exception e){
             throw new IllegalArgumentException("Error while updating reservation: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Optional<Reservation> handle(UpdateStatusCommand command) {
+        var result = reservationRepository.findById(command.reservationId());
+        if (result.isEmpty())
+            throw new IllegalArgumentException("Reservation does not exist");
+        var statusToUpdate = result.get();
+        try {
+            var updatedStatus = reservationRepository.save(statusToUpdate.updatedStatus(command));
+            return Optional.of(updatedStatus);
+        }catch (Exception e){
+            throw new IllegalArgumentException("Error while updating status: "+ e.getMessage());
         }
     }
 }
