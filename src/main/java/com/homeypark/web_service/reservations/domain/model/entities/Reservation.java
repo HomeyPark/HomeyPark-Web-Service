@@ -1,12 +1,9 @@
 package com.homeypark.web_service.reservations.domain.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.reservations.domain.model.commands.CreateReservationCommand;
 import com.homeypark.web_service.reservations.domain.model.commands.UpdateReservationCommand;
 import com.homeypark.web_service.reservations.domain.model.commands.UpdateStatusCommand;
 import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
-import com.homeypark.web_service.user.domain.model.entities.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,11 +27,26 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private Long guestId;
+
+    private Long hostId;
+
+    private Long parkingId;
+
+    private Long vehicleId;
+
+    private Long cardId;
+
     public Reservation(CreateReservationCommand command) {
         this.hoursRegistered = command.hoursRegistered();
         this.totalFare = command.totalFare();
         this.startTime = command.startTime();
         this.endTime = command.endTime();
+        this.hostId = command.hostId();
+        this.guestId = command.guestId();
+        this.parkingId = command.parkingId();
+        this.vehicleId = command.vehicleId();
+        this.cardId = command.cardId();
     }
     public Reservation updatedReservation(UpdateReservationCommand command){
         this.hoursRegistered = command.hoursRegistered();

@@ -8,4 +8,9 @@ public record CreateReservationResource(
         Integer hoursRegistered,
         Double totalFare,
         LocalDateTime startTime,
-        LocalDateTime endTime) {}
+        LocalDateTime endTime,
+        Long guestId,
+        Long hostId,
+        Long parkingId,
+        Long vehicleId,
+        Long cardId) {}
