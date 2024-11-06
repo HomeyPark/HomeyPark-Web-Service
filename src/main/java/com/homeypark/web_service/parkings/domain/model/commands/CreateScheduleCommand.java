@@ -2,8 +2,7 @@ package com.homeypark.web_service.parkings.domain.model.commands;
 
 import java.time.LocalDateTime;
 
-public record UpdateScheduleCommand(Long scheduleId,
-                                    String day,
+public record CreateScheduleCommand(String day,
                                     LocalDateTime startTime,
                                     LocalDateTime endTime) {
 }

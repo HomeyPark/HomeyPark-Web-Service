@@ -5,24 +5,22 @@ import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkin
 
 public class CreateParkingCommandFromResourceAssembler {
     public static CreateParkingCommand toCommandFromResource(CreateParkingResource resource) {
-        return new CreateParkingCommand(
-                resource.userId(),
-                resource.address(),
+        return new CreateParkingCommand(resource.userId(),
                 resource.width(),
                 resource.length(),
                 resource.height(),
                 resource.price(),
                 resource.phone(),
+                resource.space(),
                 resource.description(),
+                resource.address(),
+                resource.numDirection(),
+                resource.street(),
                 resource.district(),
                 resource.city(),
                 resource.coordinates(),
-                resource.typeDirection(),
-                resource.numDirection(),
-                resource.street(),
-                resource.reference(),
-                resource.startTime(),
-                resource.endTime()
+                resource.latitude(),
+                resource.longitude()
         );
     }
 }

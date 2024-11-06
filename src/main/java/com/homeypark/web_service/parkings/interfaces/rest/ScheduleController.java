@@ -6,7 +6,9 @@ import com.homeypark.web_service.parkings.domain.model.aggregates.Location;
 import com.homeypark.web_service.parkings.domain.model.aggregates.Schedule;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllLocationsQuery;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllScheduleQuery;
+import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateScheduleResource;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateScheduleResource;
+import com.homeypark.web_service.parkings.interfaces.rest.transformers.CreateScheduleCommandFromResourceAssembler;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.UpdateScheduleCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -36,6 +38,12 @@ public class ScheduleController {
         var updatedSchedule = scheduleCommandService.handle(updateScheduleCommand);
 
         return updatedSchedule.map(p -> new ResponseEntity<>(p, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+    @PostMapping
+    public ResponseEntity<Schedule> createSchedule(@RequestBody CreateScheduleResource createScheduleResource){
+        var createScheduleCommand = CreateScheduleCommandFromResourceAssembler.toCommandFromResource(createScheduleResource);
+        var schedule = scheduleCommandService.handle(createScheduleCommand);
+        return schedule.map(p->new ResponseEntity<>(p,HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping

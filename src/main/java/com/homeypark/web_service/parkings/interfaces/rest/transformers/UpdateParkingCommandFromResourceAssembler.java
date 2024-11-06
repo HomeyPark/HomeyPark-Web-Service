@@ -6,21 +6,20 @@ import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkin
 public class UpdateParkingCommandFromResourceAssembler {
     public static UpdateParkingCommand toCommandFromResource(Long id, UpdateParkingResource resource){
         return new UpdateParkingCommand(id,
-                resource.address(),
                 resource.width(),
                 resource.length(),
                 resource.height(),
                 resource.price(),
                 resource.phone(),
+                resource.space(),
                 resource.description(),
+                resource.address(),
+                resource.numDirection(),
+                resource.street(),
                 resource.district(),
                 resource.city(),
                 resource.coordinates(),
-                resource.typeDirection(),
-                resource.numDirection(),
-                resource.street(),
-                resource.reference(),
-                resource.startTime(),
-                resource.endTime());
+                resource.latitude(),
+                resource.longitude());
     }
 }

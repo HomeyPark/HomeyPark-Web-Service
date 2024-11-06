@@ -1,6 +1,7 @@
 package com.homeypark.web_service.parkings.application.internal.commandServices;
 
 import com.homeypark.web_service.parkings.domain.model.aggregates.Schedule;
+import com.homeypark.web_service.parkings.domain.model.commands.CreateScheduleCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.commands.UpdateScheduleCommand;
 import com.homeypark.web_service.parkings.domain.model.entities.Parking;
@@ -16,6 +17,18 @@ public class ScheduleCommandService implements IScheduleCommandService {
 
     public ScheduleCommandService(IScheduleRepository scheduleRepository){
         this.scheduleRepository = scheduleRepository;
+    }
+
+    @Override
+    public Optional<Schedule> handle(CreateScheduleCommand command) {
+        Schedule schedule = new Schedule(command);
+        try{
+            var response = scheduleRepository.save(schedule);
+            return Optional.of(response);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
     }
 
     @Override

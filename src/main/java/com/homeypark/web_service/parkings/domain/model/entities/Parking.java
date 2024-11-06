@@ -14,6 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,21 +27,21 @@ public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    public String address;
     public double width;
     public double length;
     public double height;
     public double price;
     public String phone;
+    public String space;
     public String description;
 
     @OneToOne(mappedBy = "parking", cascade = CascadeType.ALL, optional = false)
     @JsonManagedReference
     private Location location;
 
-    @OneToOne(mappedBy = "parking", cascade = CascadeType.ALL, optional = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parking")
     @JsonManagedReference
-    private Schedule schedule;
+    private List<Schedule> schedules = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
@@ -46,42 +49,35 @@ public class Parking {
     private User user;
 
     public Parking(CreateParkingCommand command) {
-        this.address = command.address();
         this.width = command.width();
         this.length = command.length();
         this.height = command.height();
         this.price = command.price();
         this.phone = command.phone();
+        this.space = command.space();
         this.description = command.description();
 
         //Location
         this.location = new Location();
+        this.location.setAddress(command.address());
+        this.location.setNumDirection(command.numDirection());
+        this.location.setStreet(command.street());
         this.location.setDistrict(command.district());
         this.location.setCity(command.city());
         this.location.setCoordinates(command.coordinates());
-        this.location.setTypeDirection(command.typeDirection());
-        this.location.setNumDirection(command.numDirection());
-        this.location.setStreet(command.street());
-        this.location.setReference(command.reference());
+        this.location.setLatitude(command.latitude());
+        this.location.setLongitude(command.longitude());
 
         this.location.setParking(this);
 
-        //Schedule
-        this.schedule = new Schedule();
-        this.schedule.setStartTime(command.startTime());
-        this.schedule.setEndTime(command.endTime());
-
-        this.schedule.setParking(this);
-
-
     }
     public Parking updatedParking(UpdateParkingCommand command){
-        this.address = command.address();
         this.width = command.width();
         this.length = command.length();
         this.height = command.height();
         this.price = command.price();
         this.phone = command.phone();
+        this.space = command.space();
         this.description = command.description();
 
         return this;
