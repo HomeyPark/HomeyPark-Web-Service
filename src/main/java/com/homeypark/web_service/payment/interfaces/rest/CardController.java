@@ -24,7 +24,7 @@ public class CardController {
         this.cardCommandService = cardCommandService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Card> createCard(@RequestBody CreateCardResource createCardResource) {
         var createCardCommand = CreateCardCommandFromResourceAssembler.toCommandFromResource(createCardResource);
 

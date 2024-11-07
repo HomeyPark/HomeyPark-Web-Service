@@ -42,7 +42,7 @@ public class VehicleController {
     }
 
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Vehicle> createVehicle(@RequestBody CreateVehicleResource resource) {
         return vehicleCommandService.handle(CreateVehicleCommandFromResourceAssembler.toCommandFromResource(resource))
                 .map(vehicle -> ResponseEntity.status(HttpStatus.CREATED).body(vehicle))
@@ -56,7 +56,7 @@ public class VehicleController {
         return new ResponseEntity<>(vehicleList,HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Vehicle> updateVehicle(@PathVariable Long id, @RequestBody UpdateVehicleResource updateVehicleResource) {
         var updateVehicleCommand = UpdateVehicleCommandFromResource.toCommandFromResource(id, updateVehicleResource);
         var updatedVehicle = vehicleCommandService.handle(updateVehicleCommand);

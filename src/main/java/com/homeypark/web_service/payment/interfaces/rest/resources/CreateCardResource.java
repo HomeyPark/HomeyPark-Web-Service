@@ -1,4 +1,8 @@
 package com.homeypark.web_service.payment.interfaces.rest.resources;
 
-public record CreateCardResource(Long numCard, Long cvv, String date) {
+public record CreateCardResource(Double numCard,
+                                 Double cvv,
+                                 String date,
+                                 String holder,
+                                 Long userId) {
 }

@@ -16,27 +16,31 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long numCard;
+    private Double numCard;
 
-    private Long cvv;
+    private Double cvv;
 
     private String date;
+
+    private String holder;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
 
-    public Card(Long numCard, Long cvv, String date) {
+    public Card(Double numCard, Double cvv, String date, String holder) {
         this.numCard = numCard;
         this.cvv = cvv;
         this.date = date;
+        this.holder = holder;
     }
 
     public Card(CreateCardCommand command) {
         this.numCard = command.numCard();
         this.cvv = command.cvv();
         this.date = command.date();
+        this.holder = command.holder();
     }
 
 }

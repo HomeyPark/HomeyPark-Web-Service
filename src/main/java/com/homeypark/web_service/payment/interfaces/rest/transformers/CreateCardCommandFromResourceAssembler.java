@@ -5,6 +5,6 @@ import com.homeypark.web_service.payment.interfaces.rest.resources.CreateCardRes
 
 public class CreateCardCommandFromResourceAssembler {
     public static CreateCardCommand toCommandFromResource(CreateCardResource resource) {
-        return new CreateCardCommand(resource.numCard(), resource.cvv(), resource.date());
+        return new CreateCardCommand(resource.numCard(), resource.cvv(), resource.date(), resource.holder(), resource.userId());
     }
 }
