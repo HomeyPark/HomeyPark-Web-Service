@@ -27,12 +27,14 @@ public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    public double width;
-    public double length;
-    public double height;
-    public double price;
+    public Double width;
+    public Double length;
+    public Double height;
+    public Double price;
     public String phone;
-    public String space;
+    public Integer space;
+
+    @Column(columnDefinition = "TEXT")
     public String description;
 
     @OneToOne(mappedBy = "parking", cascade = CascadeType.ALL, optional = false)
@@ -64,7 +66,6 @@ public class Parking {
         this.location.setStreet(command.street());
         this.location.setDistrict(command.district());
         this.location.setCity(command.city());
-        this.location.setCoordinates(command.coordinates());
         this.location.setLatitude(command.latitude());
         this.location.setLongitude(command.longitude());
 

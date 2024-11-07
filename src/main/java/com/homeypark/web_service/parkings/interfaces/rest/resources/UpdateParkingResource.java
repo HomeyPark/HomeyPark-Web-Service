@@ -1,12 +1,12 @@
 package com.homeypark.web_service.parkings.interfaces.rest.resources;
 
 public record UpdateParkingResource(
-        double width,
-        double length,
-        double height,
-        double price,
+        Double width,
+        Double length,
+        Double height,
+        Double price,
         String phone,
-        String space,
+        Integer space,
         String description,
         String address,
         String numDirection,

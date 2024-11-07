@@ -5,7 +5,6 @@ public record UpdateLocationResource(String address,
                                      String street,
                                      String district,
                                      String city,
-                                     String coordinates,
-                                     String latitude,
-                                     String longitude) {
+                                     Double latitude,
+                                     Double longitude) {
 }

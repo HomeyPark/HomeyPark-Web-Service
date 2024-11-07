@@ -28,9 +28,8 @@ public class Location {
     private String street;
     private String district;
     private String city;
-    private String coordinates;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
 
 
     public Location updateLocation(UpdateLocationCommand command){
@@ -39,7 +38,6 @@ public class Location {
         this.street= command.street();
         this.district = command.district();
         this.city = command.city();
-        this.coordinates = command.coordinates();
         this.latitude = command.latitude();
         this.longitude = command.longitude();
 

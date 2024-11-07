@@ -5,6 +5,6 @@ import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateSchedu
 
 public class CreateScheduleCommandFromResourceAssembler {
     public static CreateScheduleCommand toCommandFromResource(CreateScheduleResource resource){
-        return new CreateScheduleCommand(resource.day(), resource.startTime(), resource.endTime());
+        return new CreateScheduleCommand(resource.day(), resource.startTime(), resource.endTime(), resource.parkingId());
     }
 }
