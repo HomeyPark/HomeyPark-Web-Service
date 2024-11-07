@@ -26,6 +26,12 @@ public class ParkingCommandService implements IParkingCommandService {
     @Override
     public Optional<Parking> handle(CreateParkingCommand command) {
         Parking parking = new Parking(command);
+        var userOptional = userRepository.findById(command.userId());
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("User not found with ID: " + command.userId());
+        }
+        parking.setUser(userOptional.get());
+
         try{
             var response = parkingRepository.save(parking);
             return Optional.of(response);

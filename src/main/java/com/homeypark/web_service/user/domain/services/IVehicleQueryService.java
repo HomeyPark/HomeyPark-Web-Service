@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface IVehicleQueryService {
     Optional<Vehicle> handle(GetVehicleByIdQuery query);
+    List<Vehicle> handle(GetAllVehiclesQuery query);
 
 }

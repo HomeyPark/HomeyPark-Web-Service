@@ -11,7 +11,11 @@ public class CreateReservationCommandFromResourceAssembler {
                 resource.totalFare(),
                 resource.startTime(),
                 resource.endTime(),
-                resource.status()
+                resource.guestId(),
+                resource.hostId(),
+                resource.parkingId(),
+                resource.vehicleId(),
+                resource.cardId()
         );
     }
 }

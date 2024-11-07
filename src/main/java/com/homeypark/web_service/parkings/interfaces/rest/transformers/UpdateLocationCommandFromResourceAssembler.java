@@ -5,13 +5,6 @@ import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateLocati
 
 public class UpdateLocationCommandFromResourceAssembler {
     public static UpdateLocationCommand toCommandFromResource(Long id, UpdateLocationResource resource){
-        return new UpdateLocationCommand(id,
-                resource.district(),
-                resource.city(),
-                resource.coordinates(),
-                resource.typeDirection(),
-                resource.numDirection(),
-                resource.street(),
-                resource.reference());
+        return new UpdateLocationCommand(id,resource.address(),resource.numDirection(),resource.street(),resource.district(), resource.city(), resource.latitude(), resource.longitude());
     }
 }

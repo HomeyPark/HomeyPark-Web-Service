@@ -1,5 +1,7 @@
 package com.homeypark.web_service.reservations.interfaces.rest.resources;
 
+import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
+
 import java.time.LocalDateTime;
 
 public record CreateReservationResource(
@@ -7,4 +9,8 @@ public record CreateReservationResource(
         Double totalFare,
         LocalDateTime startTime,
         LocalDateTime endTime,
-        String status) {}
+        Long guestId,
+        Long hostId,
+        Long parkingId,
+        Long vehicleId,
+        Long cardId) {}

@@ -4,7 +4,9 @@ import com.homeypark.web_service.parkings.application.internal.commandServices.L
 import com.homeypark.web_service.parkings.application.internal.queryServices.LocationQueryService;
 import com.homeypark.web_service.parkings.domain.model.aggregates.Location;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllLocationsQuery;
+import com.homeypark.web_service.parkings.interfaces.rest.resources.LocationResource;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateLocationResource;
+import com.homeypark.web_service.parkings.interfaces.rest.transformers.LocationResourceFromEntityAssembler;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.UpdateLocationCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -33,10 +35,13 @@ public class LocationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Location>> getAllLocation(){
+    public ResponseEntity<List<LocationResource>> getAllLocation(){
         var getAllLocationQuery = new GetAllLocationsQuery();
         var locationList = locationQueryService.handle(getAllLocationQuery);
-        return new ResponseEntity<>(locationList, HttpStatus.OK);
+
+        var resource = locationList.stream().map(LocationResourceFromEntityAssembler::toResourceFromEntity).toList();
+
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
 }
