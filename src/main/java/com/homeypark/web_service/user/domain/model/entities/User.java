@@ -1,11 +1,17 @@
 package com.homeypark.web_service.user.domain.model.entities;
 
-import com.homeypark.web_service.parkings.domain.model.entities.Parking;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.homeypark.web_service.payment.domain.model.entities.Card;
+import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
+import com.homeypark.web_service.user.domain.model.aggregates.Vehicle;
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
+import com.homeypark.web_service.user.domain.model.commands.UpdateUserCommand;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,23 +28,37 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private LocalDateTime dateCreated;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Parking> parkings = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference
+    private List<Vehicle> vehicles = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @JsonManagedReference
+    private List<Card> cards = new ArrayList<>();
 
-    public User(String email, Long id, String lastName, String name, String password) {
+    public User(String email, Long id, String lastName, String name, String password, LocalDateTime dateCreated) {
         this.id = id;
         this.email = email;
         this.lastName = lastName;
         this.name = name;
         this.password = password;
+        this.dateCreated = dateCreated;
+        this.vehicles = new ArrayList<>();
     }
-
     public User(CreateUserCommand command) {
         this.name = command.name();
         this.lastName = command.lastName();
         this.email = command.email();
         this.password = command.password();
+        this.vehicles = new ArrayList<>();
+    }
+    public User updatedUser(UpdateUserCommand command) {
+        this.name = command.name();
+        this.lastName = command.lastName();
+        this.email = command.email();
+        this.password = command.password();
+        return this;
     }
 }

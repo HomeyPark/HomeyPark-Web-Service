@@ -1,18 +1,20 @@
 package com.homeypark.web_service.parkings.domain.model.commands;
 
-
-import com.homeypark.web_service.user.domain.model.entities.User;
-
 public record CreateParkingCommand(
-        String address,
-        double width,
-        double length,
-        double height,
-        double price,
+        Long userId,
+        Double width,
+        Double length,
+        Double height,
+        Double price,
         String phone,
+        Integer space,
         String description,
-        double latitude,
-        double longitude,
-        Long userId
+        String address,
+        String numDirection,
+        String street,
+        String district,
+        String city,
+        Double latitude,
+        Double longitude
 ) {
 }

@@ -7,5 +7,9 @@ public record CreateReservationCommand(
         Double totalFare,
         LocalDateTime startTime,
         LocalDateTime endTime,
-        String status
+        Long guestId,
+        Long hostId,
+        Long parkingId,
+        Long vehicleId,
+        Long cardId
 ) {}

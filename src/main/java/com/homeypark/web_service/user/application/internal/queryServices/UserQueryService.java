@@ -18,9 +18,9 @@ public class UserQueryService implements IUserQueryService {
         this.userRepository = userRepository;
     }
 
-
     @Override
-    public Optional<User> handle(GetUserByIdQuery query) {
+    public Optional<User> handle(GetUserByIdQuery query)
+    {
         return userRepository.findById(query.userId());
     }
 
