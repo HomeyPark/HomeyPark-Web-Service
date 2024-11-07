@@ -6,6 +6,7 @@ import com.homeypark.web_service.parkings.domain.model.commands.DeleteParkingCom
 import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllParkingQuery;
 import com.homeypark.web_service.parkings.domain.model.queries.GetParkingByIdQuery;
+import com.homeypark.web_service.parkings.domain.model.queries.GetParkingListByUserId;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkingResource;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkingResource;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.CreateParkingCommandFromResourceAssembler;
@@ -74,6 +75,15 @@ public class ParkingController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(parking.get());
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Parking>> getParkingListByUserId(@PathVariable Long id) {
+        GetParkingListByUserId query = new GetParkingListByUserId(id);
+
+        List<Parking> parkingList = parkingQueryService.handle(query);
+
+        return ResponseEntity.ok(parkingList);
     }
 
 }
