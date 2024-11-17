@@ -7,7 +7,9 @@ import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllParkingQuery;
 import com.homeypark.web_service.parkings.domain.model.queries.GetParkingByIdQuery;
 import com.homeypark.web_service.parkings.domain.model.queries.GetParkingListByUserId;
+import com.homeypark.web_service.parkings.domain.model.queries.GetParkingsByNearLatLngQuery;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.CreateParkingResource;
+import com.homeypark.web_service.parkings.interfaces.rest.resources.LocationResource;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkingResource;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.CreateParkingCommandFromResourceAssembler;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.UpdateParkingCommandFromResourceAssembler;
@@ -84,6 +86,15 @@ public class ParkingController {
         List<Parking> parkingList = parkingQueryService.handle(query);
 
         return ResponseEntity.ok(parkingList);
+    }
+
+    @GetMapping("/nearby")
+    public ResponseEntity<List<Parking>> getNearbyLocation(@RequestParam double lat, @RequestParam double lng){
+        var getParkingsByNearLatLngQuery = new GetParkingsByNearLatLngQuery(lat, lng);
+
+        List<Parking> parkingList = parkingQueryService.handle(getParkingsByNearLatLngQuery);
+
+        return new ResponseEntity<>(parkingList, HttpStatus.OK);
     }
 
 }

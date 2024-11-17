@@ -2,6 +2,7 @@ package com.homeypark.web_service.user.application.internal.queryServices;
 
 import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.model.queries.GetAllUsersQuery;
+import com.homeypark.web_service.user.domain.model.queries.GetUserByEmailAndPasswordQuery;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
 import com.homeypark.web_service.user.domain.services.IUserQueryService;
 import com.homeypark.web_service.user.infrastructure.repositories.jpa.IUserRepository;
@@ -28,4 +29,21 @@ public class UserQueryService implements IUserQueryService {
     public List<User> handle(GetAllUsersQuery query) {
         return userRepository.findAll();
     }
+
+    @Override
+    public Optional<User> handle(GetUserByEmailAndPasswordQuery query) {
+        System.out.println("UserQueryService: handle(GetUserByEmailAndPasswordQuery query)");
+        System.out.println(query.email());
+        System.out.println(query.password());
+
+        var userList = userRepository.findByEmailAndPassword(query.email(), query.password());
+
+        if (userList.size() == 1) {
+            return Optional.of(userList.getFirst());
+        }
+
+        return userList.getFirst() == null ? Optional.empty() : Optional.of(userList.getFirst());
+    }
+
+
 }

@@ -3,21 +3,30 @@ package com.homeypark.web_service.shared.config.seeders;
 import com.homeypark.web_service.parkings.domain.model.commands.CreateParkingCommand;
 import com.homeypark.web_service.parkings.domain.model.entities.Parking;
 import com.homeypark.web_service.parkings.infrastructure.repositories.jpa.IParkingRepository;
+import com.homeypark.web_service.reservations.domain.model.commands.CreateReservationCommand;
+import com.homeypark.web_service.reservations.domain.model.commands.UpdateStatusCommand;
+import com.homeypark.web_service.reservations.domain.model.entities.Reservation;
+import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
+import com.homeypark.web_service.reservations.infrastructure.repositories.jpa.IReservationRepository;
 import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.infrastructure.repositories.jpa.IUserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class DataSeeder implements CommandLineRunner {
 
     private final IUserRepository userRepository;
     private final IParkingRepository parkingRepository;
+    private final IReservationRepository reservationRepository;
 
-    public DataSeeder(IUserRepository userRepository, IParkingRepository parkingRepository) {
+    public DataSeeder(IUserRepository userRepository, IParkingRepository parkingRepository, IReservationRepository reservationRepository) {
         this.userRepository = userRepository;
         this.parkingRepository = parkingRepository;
+        this.reservationRepository = reservationRepository;
     }
 
 
@@ -52,6 +61,28 @@ public class DataSeeder implements CommandLineRunner {
             parkingRepository.save(parking2);
             parkingRepository.save(parking3);
             parkingRepository.save(parking4);
+
+
+            Reservation reservation1 = new Reservation(new CreateReservationCommand(12, 35.0, LocalDateTime.now(), LocalDateTime.now().plusHours(2), user1.getId(), user2.getId(), parking2.getId(), 1L, 1L));
+
+            Reservation reservation2 = new Reservation(new CreateReservationCommand(12, 35.0, LocalDateTime.now().plusHours(2), LocalDateTime.now().plusHours(3), user1.getId(), user3.getId(), parking3.getId(), 1L, 1L));
+
+            Reservation reservation3 = new Reservation(new CreateReservationCommand(12, 35.0, LocalDateTime.now().plusHours(8), LocalDateTime.now().plusHours(9), user1.getId(), user2.getId(), parking4.getId(), 1L, 1L));
+
+            Reservation reservation4 = new Reservation(new CreateReservationCommand(12, 35.0, LocalDateTime.now().plusHours(5), LocalDateTime.now().plusHours(6), user1.getId(), user3.getId(), parking2.getId(), 1L, 1L));
+
+            Reservation reservation5 = new Reservation(new CreateReservationCommand(12, 35.0, LocalDateTime.now(), LocalDateTime.now().plusHours(2), user1.getId(), user3.getId(), parking2.getId(), 1L, 1L));
+
+            reservation2.updatedStatus(new UpdateStatusCommand(reservation2.getId(), Status.Completed));
+            reservation3.updatedStatus(new UpdateStatusCommand(reservation3.getId(), Status.Approved));
+            reservation4.updatedStatus(new UpdateStatusCommand(reservation4.getId(), Status.Cancelled));
+            reservation5.updatedStatus(new UpdateStatusCommand(reservation4.getId(), Status.InProgress));
+
+            reservationRepository.save(reservation1);
+            reservationRepository.save(reservation2);
+            reservationRepository.save(reservation3);
+            reservationRepository.save(reservation4);
+            reservationRepository.save(reservation5);
         }
     }
 }

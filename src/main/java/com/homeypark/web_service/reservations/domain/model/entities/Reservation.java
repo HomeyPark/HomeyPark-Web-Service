@@ -7,7 +7,11 @@ import com.homeypark.web_service.reservations.domain.model.valueobject.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,6 +28,7 @@ public class Reservation {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -37,6 +42,13 @@ public class Reservation {
 
     private Long cardId;
 
+
+    @CreationTimestamp
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    private Instant updatedAt;
+
     public Reservation(CreateReservationCommand command) {
         this.hoursRegistered = command.hoursRegistered();
         this.totalFare = command.totalFare();
@@ -47,6 +59,7 @@ public class Reservation {
         this.parkingId = command.parkingId();
         this.vehicleId = command.vehicleId();
         this.cardId = command.cardId();
+        this.status = Status.Pending;
     }
     public Reservation updatedReservation(UpdateReservationCommand command){
         this.hoursRegistered = command.hoursRegistered();

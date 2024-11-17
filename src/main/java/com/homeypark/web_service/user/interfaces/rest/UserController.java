@@ -7,6 +7,7 @@ import com.homeypark.web_service.user.domain.model.commands.CreateUserCommand;
 import com.homeypark.web_service.user.domain.model.commands.DeleteUserCommand;
 import com.homeypark.web_service.user.domain.model.entities.User;
 import com.homeypark.web_service.user.domain.model.queries.GetAllUsersQuery;
+import com.homeypark.web_service.user.domain.model.queries.GetUserByEmailAndPasswordQuery;
 import com.homeypark.web_service.user.domain.model.queries.GetUserByIdQuery;
 import com.homeypark.web_service.user.interfaces.rest.resources.CreateUserResource;
 import com.homeypark.web_service.user.interfaces.rest.resources.UpdateUserResource;
@@ -36,6 +37,15 @@ public class UserController {
         var users = userQueryService.handle(getAllUsersQuery);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<User> getUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
+        var getUserByEmailAndPasswordQuery = new GetUserByEmailAndPasswordQuery(email, password);
+
+        var user = userQueryService.handle(getUserByEmailAndPasswordQuery);
+
+        return user.map(u -> new ResponseEntity<>(u, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/{id}")

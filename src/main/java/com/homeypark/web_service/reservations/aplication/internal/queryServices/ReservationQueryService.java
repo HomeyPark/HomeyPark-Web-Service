@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -46,5 +45,15 @@ public class ReservationQueryService implements IReservationQueryService {
     public List<Reservation> handle(GetUpComingReservationQuery query) {
         List<Status> comingStatuses = Arrays.asList(Status.Pending, Status.Approved);
         return reservationRepository.findByStatusIn(comingStatuses);
+    }
+
+    @Override
+    public List<Reservation> handle(GetReservationsByHostIdQuery query) {
+        return reservationRepository.findByHostId(query.hostId());
+    }
+
+    @Override
+    public List<Reservation> handle(GetReservationsByGuestIdQuery query) {
+        return reservationRepository.findByGuestId(query.guestId());
     }
 }

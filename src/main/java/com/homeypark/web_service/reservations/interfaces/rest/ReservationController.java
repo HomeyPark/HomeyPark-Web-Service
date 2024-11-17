@@ -36,6 +36,7 @@ public class ReservationController {
      var reservationList = reservationQueryService.handle(getAllReservationsQuery);
      return new ResponseEntity<>(reservationList,HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody CreateReservationResource createReservationResource) {
         var createReservationCommand = CreateReservationCommandFromResourceAssembler.toCommandFromResource(createReservationResource);
@@ -65,6 +66,18 @@ public class ReservationController {
         var reservation = reservationQueryService.handle(getReservationByIdQuery);
 
         return reservation.map(r -> new ResponseEntity<>(r, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping("/host/{hostId}")
+    public ResponseEntity<List<Reservation>> getReservationsByHostId(@PathVariable Long hostId){
+        var getReservationsByHostIdQuery = new GetReservationsByHostIdQuery(hostId);
+        var reservationList = reservationQueryService.handle(getReservationsByHostIdQuery);
+        return new ResponseEntity<>(reservationList,HttpStatus.OK);
+    }
+    @GetMapping("/guest/{guestId}")
+    public ResponseEntity<List<Reservation>> getReservationsByGuestId(@PathVariable Long guestId){
+        var getReservationsByGuestIdQuery = new GetReservationsByGuestIdQuery(guestId);
+        var reservationList = reservationQueryService.handle(getReservationsByGuestIdQuery);
+        return new ResponseEntity<>(reservationList,HttpStatus.OK);
     }
     @GetMapping("/{id}/details")
     public ResponseEntity<Map<String, Object>> getReservationDetails(@PathVariable("id") Long id) {
