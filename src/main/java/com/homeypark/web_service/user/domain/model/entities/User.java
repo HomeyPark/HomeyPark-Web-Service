@@ -53,6 +53,7 @@ public class User {
         this.email = command.email();
         this.password = command.password();
         this.vehicles = new ArrayList<>();
+        this.dateCreated = LocalDateTime.now();
     }
     public User updatedUser(UpdateUserCommand command) {
         this.name = command.name();

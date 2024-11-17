@@ -4,6 +4,7 @@ import com.homeypark.web_service.parkings.application.internal.commandServices.L
 import com.homeypark.web_service.parkings.application.internal.queryServices.LocationQueryService;
 import com.homeypark.web_service.parkings.domain.model.aggregates.Location;
 import com.homeypark.web_service.parkings.domain.model.queries.GetAllLocationsQuery;
+import com.homeypark.web_service.parkings.domain.model.queries.GetLocationsByNearLatLngQuery;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.LocationResource;
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateLocationResource;
 import com.homeypark.web_service.parkings.interfaces.rest.transformers.LocationResourceFromEntityAssembler;
@@ -38,6 +39,16 @@ public class LocationController {
     public ResponseEntity<List<LocationResource>> getAllLocation(){
         var getAllLocationQuery = new GetAllLocationsQuery();
         var locationList = locationQueryService.handle(getAllLocationQuery);
+
+        var resource = locationList.stream().map(LocationResourceFromEntityAssembler::toResourceFromEntity).toList();
+
+        return new ResponseEntity<>(resource, HttpStatus.OK);
+    }
+
+    @GetMapping("/nearby")
+    public ResponseEntity<List<LocationResource>> getNearbyLocation(@RequestParam double lat, @RequestParam double lng){
+        var getNearbyLocationQuery = new GetLocationsByNearLatLngQuery(lat, lng);
+        var locationList = locationQueryService.handle(getNearbyLocationQuery);
 
         var resource = locationList.stream().map(LocationResourceFromEntityAssembler::toResourceFromEntity).toList();
 
