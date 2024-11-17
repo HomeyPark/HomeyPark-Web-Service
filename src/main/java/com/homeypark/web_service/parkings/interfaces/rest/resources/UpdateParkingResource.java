@@ -10,10 +10,6 @@ public record UpdateParkingResource(
         String description,
         String address,
         String numDirection,
-        String street,
-        String district,
-        String city,
-        String coordinates,
-        String latitude,
-        String longitude) {
+        Double latitude,
+        Double longitude) {
 }

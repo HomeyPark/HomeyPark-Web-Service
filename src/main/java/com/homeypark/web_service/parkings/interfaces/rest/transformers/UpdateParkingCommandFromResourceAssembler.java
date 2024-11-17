@@ -4,8 +4,9 @@ import com.homeypark.web_service.parkings.domain.model.commands.UpdateParkingCom
 import com.homeypark.web_service.parkings.interfaces.rest.resources.UpdateParkingResource;
 
 public class UpdateParkingCommandFromResourceAssembler {
-    public static UpdateParkingCommand toCommandFromResource(Long id, UpdateParkingResource resource){
-        return new UpdateParkingCommand(id,
+    public static UpdateParkingCommand toCommandFromResource(Long id, UpdateParkingResource resource) {
+        return new UpdateParkingCommand(
+                id,
                 resource.width(),
                 resource.length(),
                 resource.height(),
@@ -15,11 +16,8 @@ public class UpdateParkingCommandFromResourceAssembler {
                 resource.description(),
                 resource.address(),
                 resource.numDirection(),
-                resource.street(),
-                resource.district(),
-                resource.city(),
-                resource.coordinates(),
                 resource.latitude(),
-                resource.longitude());
+                resource.longitude()
+        );
     }
 }

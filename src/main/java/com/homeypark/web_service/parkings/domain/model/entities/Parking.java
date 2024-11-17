@@ -63,9 +63,6 @@ public class Parking {
         this.location = new Location();
         this.location.setAddress(command.address());
         this.location.setNumDirection(command.numDirection());
-        this.location.setStreet(command.street());
-        this.location.setDistrict(command.district());
-        this.location.setCity(command.city());
         this.location.setLatitude(command.latitude());
         this.location.setLongitude(command.longitude());
 
